@@ -9,9 +9,3 @@ Code for the 2022 [Bunnybots](https://robot.mbhs.edu/bunnybots) competition, hos
 ```bash
 git clone https://github.com/frc5587/RapidReact.git
 ```
-3. Run the following commands from a terminal in the root project directory:
-```bash
-git submodule init
-git submodule update --remote
-```
-(Ensure you are on the `master` branch of `lib` (Java-Libs))
