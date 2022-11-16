@@ -4,9 +4,6 @@
 
 package frc.robot;
 
-import frc.robot.subsystems.*;
-import frc.robot.commands.*;
-
 import org.frc5587.lib.control.DeadbandJoystick;
 import org.frc5587.lib.control.DeadbandXboxController;
 
