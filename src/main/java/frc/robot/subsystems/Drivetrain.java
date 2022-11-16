@@ -1,25 +1,63 @@
 package frc.robot.subsystems;
 
-import org.frc5587.lib.subsystems.SwerveDrivetrainBase;
-import org.frc5587.lib.subsystems.SwerveModuleBase.SwerveModuleConstants;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
+import org.frc5587.lib.subsystems.DrivetrainBase;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMax.IdleMode;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.Constants.DrivetrainConstants;
 
-public class Drivetrain extends SwerveDrivetrainBase {
-    private static SwerveModuleConstants module1Constants = new SwerveModuleConstants(DrivetrainConstants.TURN_MOTOR_GEARING, DrivetrainConstants.ENCODER_CPR, DrivetrainConstants.MODULE1_ROTATION_PID);
-    private static SwerveModuleConstants module2Constants = new SwerveModuleConstants(DrivetrainConstants.TURN_MOTOR_GEARING, DrivetrainConstants.ENCODER_CPR, DrivetrainConstants.MODULE2_ROTATION_PID);
-    private static SwerveModuleConstants module3Constants = new SwerveModuleConstants(DrivetrainConstants.TURN_MOTOR_GEARING, DrivetrainConstants.ENCODER_CPR, DrivetrainConstants.MODULE3_ROTATION_PID);
-    private static SwerveModuleConstants module4Constants = new SwerveModuleConstants(DrivetrainConstants.TURN_MOTOR_GEARING, DrivetrainConstants.ENCODER_CPR, DrivetrainConstants.MODULE4_ROTATION_PID);
+public class Drivetrain extends DrivetrainBase {
+    private static CANSparkMax leftLeader = new CANSparkMax(DrivetrainConstants.LEFT_LEADER, MotorType.kBrushless);
+    private static CANSparkMax leftFollower = new CANSparkMax(DrivetrainConstants.LEFT_FOLLOWER, MotorType.kBrushless);
+    private static CANSparkMax rightLeader = new CANSparkMax(DrivetrainConstants.RIGHT_LEADER, MotorType.kBrushless);
+    private static CANSparkMax rightFollower = new CANSparkMax(DrivetrainConstants.RIGHT_FOLLOWER, MotorType.kBrushless);
 
+    public static MotorControllerGroup leftGroup = new MotorControllerGroup(leftLeader, leftFollower);
+    public static MotorControllerGroup rightGroup = new MotorControllerGroup(rightLeader, rightFollower);
 
-    private static SwerveModule module1 = new SwerveModule(new WPI_TalonFX(10), new WPI_TalonFX(15), module1Constants);
-    private static SwerveModule module2 = new SwerveModule(new WPI_TalonFX(11), new WPI_TalonFX(16), module2Constants);
-    private static SwerveModule module3 = new SwerveModule(new WPI_TalonFX(12), new WPI_TalonFX(17), module3Constants);
-    private static SwerveModule module4 = new SwerveModule(new WPI_TalonFX(13), new WPI_TalonFX(18), module4Constants);
+    public static DriveConstants constants = new DriveConstants(DrivetrainConstants.WHEEL_DIAMETER, DrivetrainConstants.HISTORY_LIMIT, DrivetrainConstants.INVERT_GYRO, DrivetrainConstants.ENCODER_CPR, DrivetrainConstants.GEARING, DrivetrainConstants.TRACK_WIDTH);
 
-
-    public Drivetrain(DriveConstants constants) {
-        super(module1, module2, module3, module4, constants);
+    public Drivetrain() {
+        super(leftGroup, rightGroup, constants);
     }
-    
+
+    @Override
+    public void configureMotors() {
+        leftLeader.setIdleMode(IdleMode.kBrake);        
+        leftFollower.setIdleMode(IdleMode.kBrake);        
+        rightLeader.setIdleMode(IdleMode.kBrake);
+        rightFollower.setIdleMode(IdleMode.kBrake);
+
+        leftLeader.setSmartCurrentLimit(DrivetrainConstants.HARD_CURRENT_LIMIT);
+        leftFollower.setSmartCurrentLimit(DrivetrainConstants.HARD_CURRENT_LIMIT);
+        rightLeader.setSmartCurrentLimit(DrivetrainConstants.HARD_CURRENT_LIMIT);
+        rightFollower.setSmartCurrentLimit(DrivetrainConstants.HARD_CURRENT_LIMIT);
+    }
+
+    @Override
+    protected double getRightPositionTicks() {
+        return rightLeader.getEncoder().getPosition();
+    }
+
+    @Override
+    protected double getLeftPositionTicks() {
+        return leftLeader.getEncoder().getPosition();
+    }
+
+    @Override
+    protected double getRightVelocityTicksPerSecond() {
+        return rightLeader.getEncoder().getVelocity();
+    }
+
+    @Override
+    protected double getLeftVelocityTicksPerSecond() {
+        return leftLeader.getEncoder().getVelocity();
+    }
+
+    @Override
+    protected void resetEncoders() {
+        leftLeader.getEncoder().setPosition(0);
+        rightLeader.getEncoder().setPosition(0);
+    }   
 }
