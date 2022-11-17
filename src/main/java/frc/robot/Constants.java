@@ -16,7 +16,8 @@ public final class Constants {
         public static final boolean INVERT_GYRO = false;
         public static final double TRACK_WIDTH = 25.496;
 
-        public static final int HARD_CURRENT_LIMIT = 40;
+        public static final int STALL_CURRENT_LIMIT = 40;
+        public static final int FREE_CURRENT_LIMIT = 35;
         public static final int HISTORY_LIMIT = 32;
 
         public static final boolean LEFT_MOTORS_INVERTED = false;

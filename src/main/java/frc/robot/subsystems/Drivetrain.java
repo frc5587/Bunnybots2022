@@ -24,15 +24,20 @@ public class Drivetrain extends DrivetrainBase {
 
     @Override
     public void configureMotors() {
+        leftLeader.restoreFactoryDefaults();
+        leftFollower.restoreFactoryDefaults();
+        rightLeader.restoreFactoryDefaults();
+        rightFollower.restoreFactoryDefaults();
+
         leftLeader.setIdleMode(IdleMode.kBrake);        
         leftFollower.setIdleMode(IdleMode.kBrake);        
         rightLeader.setIdleMode(IdleMode.kBrake);
         rightFollower.setIdleMode(IdleMode.kBrake);
 
-        leftLeader.setSmartCurrentLimit(DrivetrainConstants.HARD_CURRENT_LIMIT);
-        leftFollower.setSmartCurrentLimit(DrivetrainConstants.HARD_CURRENT_LIMIT);
-        rightLeader.setSmartCurrentLimit(DrivetrainConstants.HARD_CURRENT_LIMIT);
-        rightFollower.setSmartCurrentLimit(DrivetrainConstants.HARD_CURRENT_LIMIT);
+        leftLeader.setSmartCurrentLimit(DrivetrainConstants.STALL_CURRENT_LIMIT, DrivetrainConstants.FREE_CURRENT_LIMIT);
+        leftFollower.setSmartCurrentLimit(DrivetrainConstants.STALL_CURRENT_LIMIT, DrivetrainConstants.FREE_CURRENT_LIMIT);
+        rightLeader.setSmartCurrentLimit(DrivetrainConstants.STALL_CURRENT_LIMIT, DrivetrainConstants.FREE_CURRENT_LIMIT);
+        rightFollower.setSmartCurrentLimit(DrivetrainConstants.STALL_CURRENT_LIMIT, DrivetrainConstants.FREE_CURRENT_LIMIT);
     }
 
     @Override
