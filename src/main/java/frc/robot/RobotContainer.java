@@ -8,6 +8,8 @@ import org.frc5587.lib.control.DeadbandJoystick;
 import org.frc5587.lib.control.DeadbandXboxController;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import frc.robot.commands.FlipArm;
+import frc.robot.subsystems.Arm;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -21,10 +23,10 @@ public class RobotContainer {
   private final DeadbandXboxController xboxController = new DeadbandXboxController(1);
 
   /* Subsystems */
-
+  private final Arm arm = new Arm();
   
   /* Commands */
-
+  private final FlipArm flipArm = new FlipArm(arm);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -37,6 +39,7 @@ public class RobotContainer {
      * within {@link DeadbandXboxController}.
      */
   private void configureButtonBindings() {
+    xboxController.dPadUp.whileActiveOnce(flipArm);
   }
 
   /**
