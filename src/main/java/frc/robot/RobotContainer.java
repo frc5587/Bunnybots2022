@@ -4,12 +4,13 @@
 
 package frc.robot;
 
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
+
 import org.frc5587.lib.control.DeadbandJoystick;
 import org.frc5587.lib.control.DeadbandXboxController;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import frc.robot.commands.FlipArm;
-import frc.robot.subsystems.Arm;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a

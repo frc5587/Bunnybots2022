@@ -49,11 +49,9 @@ public class Arm extends PivotingArmBase {
         encoder.setPosition(position);
     }
 
-    /**
-     * Sets encoder position to 0.
-     */
-    public void resetEncoder() {
-        setEncoderPosition(0);
+    // TODO
+    public double getAngle() {
+        return getEncoderPosition() * ArmConstants.GEARING;
     }
 
     // TODO
@@ -62,7 +60,7 @@ public class Arm extends PivotingArmBase {
      * @return a truthy value if the arm is in the front
      */
     public boolean inFrontPosition() {
-        return false;
+        return false; 
     }
 
     /**
@@ -97,7 +95,7 @@ public class Arm extends PivotingArmBase {
         motor.setInverted(ArmConstants.MOTOR_INVERTED);
         motor.setSmartCurrentLimit(ArmConstants.STALL_CURRENT_LIMIT, ArmConstants.FREE_CURRENT_LIMIT);
 
-        resetEncoder();
+        resetEncoders();
     }
 
     public enum ArmPosition {

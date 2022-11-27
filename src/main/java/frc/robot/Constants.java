@@ -32,9 +32,9 @@ public final class Constants {
 
         /* PivotingArmConstants */
         public static final double GEARING = 36;
-        public static final double[] SOFT_LIMITS = {0, Math.toRadians(180)};
-        public static final int ZERO_OFFSET = 0; // TODO
-        public static final int ENCODER_CPR = 0; // TODO
+        public static final double[] SOFT_LIMITS = {Math.toRadians(0), Math.toRadians(180)};
+        public static final int ZERO_OFFSET = 0;
+        public static final int ENCODER_CPR = 42;
         public static final int[] SWITCH_PORTS = {0, 1};
         public static final boolean[] SWITCH_INVERTIONS = {false, false};
         public static final ProfiledPIDController PID = new ProfiledPIDController(0, 0, 0, new Constraints(0, 0)); // TODO characterization
