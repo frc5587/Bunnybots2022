@@ -13,4 +13,28 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static final class IntakeConstants {
+        // motor ports
+        public static final int RIGHT_MOTOR = 25;
+        public static final int LEFT_MOTOR = 26;
+        
+        public static final boolean RIGHT_MOTOR_INVERTED = false;
+        public static final boolean LEFT_MOTOR_INVERTED = true;
+        // motor limits
+        public static final int STALL_LIMIT = 20;
+        public static final int FREE_LIMIT = 25;
+        // motor speeds
+        public static final double THROTTLE_FORWARD = 0.75;
+        public static final double THROTTLE_REVERSE = 0.25;
+
+        public static final double LEFT_VELOCITY_THRESHOLD = 10;  // rps
+        public static final double RIGHT_VELOCITY_THRESHOLD = 500;  // rps
+        public static final double EJECT_CRATE_RUNTIME = 0.5; // seconds
+
+        public static final double HOLD = 0.05;
+
+        public static final int SOLENOID_ID = 0;
+        public static final int SOLENOID_ID2 = 1;
+
+    }
 }
