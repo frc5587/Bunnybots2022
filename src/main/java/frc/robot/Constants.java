@@ -28,4 +28,11 @@ public final class Constants {
         public static final int RIGHT_LEADER = 15;
         public static final int RIGHT_FOLLOWER = 16;
     }
+    public static final class AutoConstants {
+        public static final double KS = 0.12199;
+        public static final double KV = 0.86458;
+        public static final double KA = 0.11829;
+        public static final double KP = 1.1124;
+
+    }
 }
