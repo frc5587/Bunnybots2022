@@ -7,7 +7,7 @@ import edu.wpi.first.wpilibj.PneumaticsModuleType;
 import frc.robot.Constants.IntakeConstants;
 
 public class IntakePistons extends PistonControl {
-    public static DoubleSolenoid piston = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, IntakeConstants.SOLENOID_ID, IntakeConstants.SOLENOID_ID2);
+    public static DoubleSolenoid[] piston = {new DoubleSolenoid(PneumaticsModuleType.CTREPCM, IntakeConstants.SOLENOID_ID, IntakeConstants.SOLENOID_ID2)};
 
     public IntakePistons() {
         super(piston);

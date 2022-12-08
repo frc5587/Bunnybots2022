@@ -45,8 +45,8 @@ public class RobotContainer {
   private void configureButtonBindings() {
     xboxController.xButton.whenPressed(intakePistons::extend);
     xboxController.yButton.whenPressed(intakePistons::retract);
-    xboxController.leftBumper.whileActiveContinuous(intake::forward);
-    xboxController.rightBumper.whileActiveContinuous(intake::backward);
+    xboxController.leftBumper.whenPressed(intake::forward);
+    xboxController.rightBumper.whenPressed(intake::backward);
   }
 
   /**

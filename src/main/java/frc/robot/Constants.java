@@ -15,8 +15,8 @@ package frc.robot;
 public final class Constants {
     public static final class IntakeConstants {
         // motor ports
-        public static final int RIGHT_MOTOR = 25;
-        public static final int LEFT_MOTOR = 26;
+        public static final int LEFT_MOTOR = 25;
+        public static final int RIGHT_MOTOR = 26;
         
         public static final boolean RIGHT_MOTOR_INVERTED = false;
         public static final boolean LEFT_MOTOR_INVERTED = true;
