@@ -38,6 +38,11 @@ public class Drivetrain extends DrivetrainBase {
         leftFollower.setSmartCurrentLimit(DrivetrainConstants.STALL_CURRENT_LIMIT, DrivetrainConstants.FREE_CURRENT_LIMIT);
         rightLeader.setSmartCurrentLimit(DrivetrainConstants.STALL_CURRENT_LIMIT, DrivetrainConstants.FREE_CURRENT_LIMIT);
         rightFollower.setSmartCurrentLimit(DrivetrainConstants.STALL_CURRENT_LIMIT, DrivetrainConstants.FREE_CURRENT_LIMIT);
+
+        leftLeader.setInverted(true);
+        leftFollower.setInverted(false);
+        rightLeader.setInverted(false);
+        rightFollower.setInverted(true);
     }
 
     @Override
