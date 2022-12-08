@@ -11,7 +11,6 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.RunIntake;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakePistons;
 
@@ -31,7 +30,6 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   
   /* Commands */
-  private final RunIntake runIntake = new RunIntake(intake);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -45,15 +43,10 @@ public class RobotContainer {
      * within {@link DeadbandXboxController}.
      */
   private void configureButtonBindings() {
-    private JoystickButton xButton = new JoystickButton(xboxController, XboxController.Button.kX.value);
-    private JoystickButton yButton = new JoystickButton(xboxController, XboxController.Button.kY.value);
-    private JoystickButton lBumper = new JoystickButton(xboxController, XboxController.Button.kLeftBumper);
-    private JoystickButton rBumper = new JoystickButton(xboxController, XboxController.Button.kRightBumper);
-
-    xButton.whenPressed(intakePistons::extend);
-    yButton.whenPressed(intakePistons::retract);
-    lBumper.whenActive(intake::forwards);
-    rBumper.whenActive(intake::backwards);
+    xboxController.xButton.whenPressed(intakePistons::extend);
+    xboxController.yButton.whenPressed(intakePistons::retract);
+    xboxController.leftBumper.whileActiveContinuous(intake::forward);
+    xboxController.rightBumper.whileActiveContinuous(intake::backward);
   }
 
   /**
