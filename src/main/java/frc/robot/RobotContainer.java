@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.EjectCrate;
+import frc.robot.commands.IntakeCrate;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.IntakePistons;
 
@@ -30,6 +32,8 @@ public class RobotContainer {
   private final Intake intake = new Intake();
   
   /* Commands */
+  private final IntakeCrate intakeCrate = new IntakeCrate(intake, intakePistons);
+  private final EjectCrate ejectCrate = new EjectCrate(intake, intakePistons);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -43,10 +47,13 @@ public class RobotContainer {
      * within {@link DeadbandXboxController}.
      */
   private void configureButtonBindings() {
-    xboxController.xButton.whenPressed(intakePistons::extend);
-    xboxController.yButton.whenPressed(intakePistons::retract);
-    xboxController.leftBumper.whenPressed(intake::forward);
-    xboxController.rightBumper.whenPressed(intake::backward);
+    xboxController.yButton.and(xboxController.leftTrigger.negate()).whileActiveOnce(intakeCrate);
+
+    /**
+    * when y button & left trigger are active, move intake outwards.
+    * when the y button & left trigger are inactive, stop.
+    */
+    xboxController.yButton.and(xboxController.leftTrigger).whileActiveOnce(ejectCrate);
   }
 
   /**

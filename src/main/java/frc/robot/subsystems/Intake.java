@@ -19,8 +19,6 @@ public class Intake extends SimpleMotorBase {
     private final RelativeEncoder rightEncoder = rightIntake.getEncoder();
     private final RelativeEncoder leftEncoder = leftIntake.getEncoder();
 
-    private double lastSet = 0;
-
     public Intake() {
         super(new MotorControllerGroup(rightIntake, leftIntake), IntakeConstants.THROTTLE_FORWARD, IntakeConstants.THROTTLE_REVERSE);
         configureMotors();
@@ -44,24 +42,17 @@ public class Intake extends SimpleMotorBase {
         leftIntake.setIdleMode(IdleMode.kBrake);
     }
 
+    @Override
+    public void periodic() {
+        SmartDashboard.putNumber("left v", leftVelocity());
+        SmartDashboard.putNumber("right v", rightVelocity());
+    }
+
     private double leftVelocity() {
         return leftEncoder.getVelocity();
     }
 
     private double rightVelocity() {
         return rightEncoder.getVelocity();
-    }
-
-    /**
-     * Detects crate if right motors is stalled and left motor is spinning under very slight load. This is just a result of the elastic on the left side of the intake.
-     * 
-     * @return whether crate is detected
-     */
-    public boolean hasCrate() {
-        if (lastSet > 0) {
-            return rightVelocity() > IntakeConstants.RIGHT_VELOCITY_THRESHOLD && leftVelocity() < IntakeConstants.LEFT_VELOCITY_THRESHOLD;
-        } else {
-            return false; 
-        }
     }
 }
