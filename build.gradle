@@ -71,7 +71,7 @@ dependencies {
 
     testImplementation 'junit:junit:4.12'
 
-    implementation "com.github.Oblarg:Oblog:master-SNAPSHOT"
+    implementation "com.github.Oblarg:Oblog:4.0.9"
     implementation 'org.frc5587:TitanLib:v2022.1.0'
 }
 
