@@ -26,6 +26,7 @@ public class RobotContainer {
   private final Arm arm = new Arm();
   private final IntakePistons intakePistons = new IntakePistons();
   private final Intake intake = new Intake();
+  private final Drivetrain drivetrain = new Drivetrain();
   
   /* Commands */
   private final FlipArm flipArm = new FlipArm(arm);
@@ -33,12 +34,14 @@ public class RobotContainer {
   private final ArmRear armRear = new ArmRear(arm);
   private final IntakeCrate intakeCrate = new IntakeCrate(intake, intakePistons);
   private final EjectCrate ejectCrate = new EjectCrate(intake, intakePistons);
+  private final ArcadeDrive arcadeDrive = new ArcadeDrive(drivetrain, () -> -joystick.getY(), joystick::getX);
 
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     /* Configure the button bindings */
     configureButtonBindings();
+    drivetrain.setDefaultCommand(arcadeDrive);
   }
 
     /**
