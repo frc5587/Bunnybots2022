@@ -25,6 +25,11 @@ public class ArmFront extends CommandBase {
         arm.forward();
     }
 
+    @Override
+    public void end(boolean interrupted) {
+        arm.stop();
+    }
+
     // @Override
     // public boolean isFinished() {
     //     return arm.getAngleRadians() < ArmConstants.FRONT_THRESHOLD;

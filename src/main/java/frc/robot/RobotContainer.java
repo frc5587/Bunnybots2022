@@ -4,20 +4,12 @@
 
 package frc.robot;
 
+import org.frc5587.lib.control.*;
+
+import edu.wpi.first.wpilibj2.command.Command;
+
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
-
-import org.frc5587.lib.control.DeadbandJoystick;
-import org.frc5587.lib.control.DeadbandXboxController;
-
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.EjectCrate;
-import frc.robot.commands.IntakeCrate;
-import frc.robot.subsystems.Intake;
-import frc.robot.subsystems.IntakePistons;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -57,6 +49,7 @@ public class RobotContainer {
     // xboxController.dPadUp.whileActiveOnce(flipArm);
     xboxController.dPadUp.whileActiveOnce(armRear);
     xboxController.dPadDown.whileActiveOnce(armFront);
+    
     xboxController.yButton.and(xboxController.leftTrigger.negate()).whileActiveOnce(intakeCrate);
 
     /**

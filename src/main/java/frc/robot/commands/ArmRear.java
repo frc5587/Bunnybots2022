@@ -25,6 +25,11 @@ public class ArmRear extends CommandBase {
         arm.back();
     }
 
+    @Override
+    public void end(boolean interrupted) {
+        arm.stop();
+    }
+
     // @Override
     // public boolean isFinished() {
     //     return arm.getAngleRadians() > ArmConstants.REAR_THRESHOLD;

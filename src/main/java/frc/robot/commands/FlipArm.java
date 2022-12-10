@@ -16,4 +16,9 @@ public class FlipArm extends CommandBase {
     public void initialize() {
         arm.toggleArm();
     }
+
+    @Override
+    public void end(boolean interrupted) {
+        arm.stop();
+    }
 }
