@@ -10,7 +10,14 @@ import frc.robot.subsystems.*;
 import org.frc5587.lib.control.DeadbandJoystick;
 import org.frc5587.lib.control.DeadbandXboxController;
 
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.EjectCrate;
+import frc.robot.commands.IntakeCrate;
+import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.IntakePistons;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -25,11 +32,16 @@ public class RobotContainer {
 
   /* Subsystems */
   private final Arm arm = new Arm();
+  private final IntakePistons intakePistons = new IntakePistons();
+  private final Intake intake = new Intake();
   
   /* Commands */
   private final FlipArm flipArm = new FlipArm(arm);
   private final ArmFront armFront = new ArmFront(arm);
   private final ArmRear armRear = new ArmRear(arm);
+  private final IntakeCrate intakeCrate = new IntakeCrate(intake, intakePistons);
+  private final EjectCrate ejectCrate = new EjectCrate(intake, intakePistons);
+
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -45,6 +57,13 @@ public class RobotContainer {
     // xboxController.dPadUp.whileActiveOnce(flipArm);
     xboxController.dPadUp.whileActiveOnce(armRear);
     xboxController.dPadDown.whileActiveOnce(armFront);
+    xboxController.yButton.and(xboxController.leftTrigger.negate()).whileActiveOnce(intakeCrate);
+
+    /**
+    * when y button & left trigger are active, move intake outwards.
+    * when the y button & left trigger are inactive, stop.
+    */
+    xboxController.yButton.and(xboxController.leftTrigger).whileActiveOnce(ejectCrate);
   }
 
   /**
