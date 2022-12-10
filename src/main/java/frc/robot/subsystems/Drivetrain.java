@@ -1,13 +1,13 @@
 package frc.robot.subsystems;
 
-import org.frc5587.lib.subsystems.DrivetrainBase;
+import org.frc5587.lib.subsystems.DifferentialDriveBase;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.Constants.DrivetrainConstants;
 
-public class Drivetrain extends DrivetrainBase {
+public class Drivetrain extends DifferentialDriveBase {
     private static CANSparkMax leftLeader = new CANSparkMax(DrivetrainConstants.LEFT_LEADER, MotorType.kBrushless);
     private static CANSparkMax leftFollower = new CANSparkMax(DrivetrainConstants.LEFT_FOLLOWER, MotorType.kBrushless);
     private static CANSparkMax rightLeader = new CANSparkMax(DrivetrainConstants.RIGHT_LEADER, MotorType.kBrushless);
