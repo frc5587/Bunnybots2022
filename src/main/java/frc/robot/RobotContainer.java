@@ -28,6 +28,8 @@ public class RobotContainer {
   
   /* Commands */
   private final FlipArm flipArm = new FlipArm(arm);
+  private final ArmFront armFront = new ArmFront(arm);
+  private final ArmRear armRear = new ArmRear(arm);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
@@ -40,7 +42,9 @@ public class RobotContainer {
      * within {@link DeadbandXboxController}.
      */
   private void configureButtonBindings() {
-    xboxController.dPadUp.whileActiveOnce(flipArm);
+    // xboxController.dPadUp.whileActiveOnce(flipArm);
+    xboxController.dPadUp.whileActiveOnce(armRear);
+    xboxController.dPadDown.whileActiveOnce(armFront);
   }
 
   /**

@@ -1,5 +1,9 @@
 package frc.robot.subsystems;
 
+import frc.robot.Constants.ArmConstants;
+
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMax.IdleMode;
@@ -7,33 +11,43 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import org.frc5587.lib.subsystems.PivotingArmBase;
 
-import frc.robot.Constants.ArmConstants;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 public class Arm extends PivotingArmBase {
-    private static CANSparkMax motor = new CANSparkMax(ArmConstants.MOTOR_ID, MotorType.kBrushless);
-    private RelativeEncoder encoder = motor.getEncoder();
+    public static CANSparkMax motor = new CANSparkMax(ArmConstants.MOTOR_ID, MotorType.kBrushless); 
+    private final RelativeEncoder encoder = motor.getEncoder();
 
-    private static PivotingArmConstants armConstants = new PivotingArmConstants(
+    private final DigitalInput frontLimitSwitch = new DigitalInput(ArmConstants.SWITCH_PORTS[0]);
+    private final DigitalInput rearLimitSwitch = new DigitalInput(ArmConstants.SWITCH_PORTS[1]);
+
+    public static PivotingArmConstants constants = new PivotingArmConstants(
         ArmConstants.GEARING,
-        ArmConstants.SOFT_LIMITS, 
-        ArmConstants.ZERO_OFFSET, 
-        ArmConstants.ENCODER_CPR, 
+        ArmConstants.SOFT_LIMITS,
+        ArmConstants.ZERO_OFFSET,
+        ArmConstants.ENCODER_CPR,
         ArmConstants.SWITCH_PORTS,
-        ArmConstants.SWITCH_INVERTIONS, 
-        ArmConstants.PID, 
+        ArmConstants.SWITCH_INVERTIONS,
+        ArmConstants.PID,
         ArmConstants.FF
     );
 
     public Arm() {
         this(motor);
-
-        configureMotors();
     }
-
+    
     public Arm(CANSparkMax motor) {
-        super(armConstants, motor);
+        super(constants, motor);
     }
 
+    public DigitalInput getFrontLimitSwitch() {
+        return frontLimitSwitch;
+    }
+
+    public DigitalInput getRearLimitSwitch() {
+        return rearLimitSwitch;
+    }
+    
     @Override
     public double getEncoderPosition() {
         return encoder.getPosition();
@@ -48,58 +62,44 @@ public class Arm extends PivotingArmBase {
     public void setEncoderPosition(double position) {
         encoder.setPosition(position);
     }
-
-    // TODO
-    public double getAngle() {
-        return getEncoderPosition() * ArmConstants.GEARING;
-    }
-
-    // TODO
-    /**
-     * Tells if the arm is in the front position.
-     * @return a truthy value if the arm is in the front
-     */
-    public boolean inFrontPosition() {
-        return false; 
-    }
-
-    /**
-     * Return what position the arm is in.
-     * @return an {@link ArmPosition} of either FRONT or REAR
-     */
-    public ArmPosition getPosition() {
-        if(inFrontPosition() == true) {
-            return ArmPosition.FRONT;
-        } else if (inFrontPosition() == false) {
-            return ArmPosition.REAR;
-        } else {
-            return null;
-        }
-    }
-
-    /**
-     * Flips arm to opposite side.
-     */
-    public void toggleArm() {
-        if(getPosition() == ArmPosition.FRONT) {
-            getController().setGoal(ArmConstants.REAR_SETPOINT);
-        } else if (getPosition() == ArmPosition.REAR) {
-            getController().setGoal(ArmConstants.FRONT_SETPOINT);
-        }
-    }
-
+    
     @Override
     public void configureMotors() {
         motor.restoreFactoryDefaults();
         motor.setIdleMode(IdleMode.kBrake);
         motor.setInverted(ArmConstants.MOTOR_INVERTED);
-        motor.setSmartCurrentLimit(ArmConstants.STALL_CURRENT_LIMIT, ArmConstants.FREE_CURRENT_LIMIT);
-
         resetEncoders();
     }
 
-    public enum ArmPosition {
-        FRONT,
-        REAR
+    public void forward() {
+        motor.set(0.3);
+    }
+
+    public void back() {
+        motor.set(-0.3);
+    }
+    
+    public void moveRear() {
+        getController().setGoal(ArmConstants.REAR_SETPOINT);
+    }
+    
+    public void moveFront() {
+        getController().setGoal(ArmConstants.FRONT_SETPOINT);
+    }
+
+    public void toggleArm() {
+        if(getFrontLimitSwitch().get()) {
+            moveRear();
+        } else if (getFrontLimitSwitch().get()) {
+            moveFront();
+        }
+    }
+
+    @Override
+    public void periodic() {
+        // TODO Auto-generated method stub
+        super.periodic();
+        SmartDashboard.putBoolean("Front Limit Switch", getFrontLimitSwitch().get());
+        SmartDashboard.putBoolean("Rear Limit Switch", getRearLimitSwitch().get());
     }
 }
