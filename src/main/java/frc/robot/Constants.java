@@ -7,6 +7,12 @@ package frc.robot;
 import edu.wpi.first.math.controller.ArmFeedforward;
 import edu.wpi.first.math.controller.ProfiledPIDController;
 import edu.wpi.first.math.trajectory.TrapezoidProfile.Constraints;
+import org.frc5587.lib.auto.ConstrainedTrajectory.TrajectoryConstraints;
+import org.frc5587.lib.auto.RamseteCommandWrapper.RamseteConstants;
+
+import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.math.controller.SimpleMotorFeedforward;
+import edu.wpi.first.math.kinematics.DifferentialDriveKinematics;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
@@ -35,14 +41,6 @@ public final class Constants {
         public static final int LEFT_FOLLOWER = 11;
         public static final int RIGHT_LEADER = 15;
         public static final int RIGHT_FOLLOWER = 16;
-    }
-    
-    public static final class AutoConstants {
-        public static final double KS = 0.12199;
-        public static final double KV = 0.86458;
-        public static final double KA = 0.11829;
-        public static final double KP = 1.1124;
-
     }
 
     public static final class ArmConstants {
@@ -94,5 +92,36 @@ public final class Constants {
 
         public static final int SOLENOID_ID = 0;
         public static final int SOLENOID_ID2 = 1;
+    }
+
+    public static final class AutoConstants {
+        public static final double KS = 0.12199;
+        public static final double KV = 0.86458;
+        public static final double KA = 0.11829;
+        public static final double KP = 1.1124;
+            /* pid/ff values */
+            public static final SimpleMotorFeedforward DRIVETRAIN_FF = new SimpleMotorFeedforward(KS, KV, KA);
+            public static final PIDController PID_CONTROLLER = new PIDController(KP, 0, 0);
+    
+            /* kinematics */
+            public static final double TRACK_WIDTH = 0.7;
+    
+            public static final DifferentialDriveKinematics DRIVETRAIN_KINEMATICS = new DifferentialDriveKinematics(
+                TRACK_WIDTH);
+    
+            /* Ramsete values */
+            public static final double MAXIMUM_VELOCITY = 2; // m/s
+            public static final double MAXIMUM_ACCELERATION = 1; // m/s^2
+            public static final double CENTRIPETAL_ACCELERATION = 1; // m/s^2
+    
+            /* Ramsete */
+            public static final RamseteConstants RAMSETE_CONSTANTS = new RamseteConstants(
+                DRIVETRAIN_FF, PID_CONTROLLER, MAXIMUM_VELOCITY, MAXIMUM_ACCELERATION, 
+                    CENTRIPETAL_ACCELERATION, DRIVETRAIN_KINEMATICS);
+            
+            /* trajectory */
+            public static final TrajectoryConstraints TRAJECTORY_CONSTRAINTS = new TrajectoryConstraints(
+                DRIVETRAIN_FF, MAXIMUM_VELOCITY, MAXIMUM_ACCELERATION, 
+                    CENTRIPETAL_ACCELERATION, DRIVETRAIN_KINEMATICS);
     }
 }
