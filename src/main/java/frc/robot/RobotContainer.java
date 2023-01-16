@@ -4,10 +4,12 @@
 
 package frc.robot;
 
-import org.frc5587.lib.control.DeadbandJoystick;
-import org.frc5587.lib.control.DeadbandXboxController;
+import org.frc5587.lib.control.*;
 
 import edu.wpi.first.wpilibj2.command.Command;
+
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -21,15 +23,24 @@ public class RobotContainer {
   private final DeadbandXboxController xboxController = new DeadbandXboxController(1);
 
   /* Subsystems */
-
+  private final Arm arm = new Arm();
+  private final IntakePistons intakePistons = new IntakePistons();
+  private final Intake intake = new Intake();
+  private final Drivetrain drivetrain = new Drivetrain();
   
   /* Commands */
-
+  private final FlipArm flipArm = new FlipArm(arm);
+  private final ArmFront armFront = new ArmFront(arm);
+  private final ArmRear armRear = new ArmRear(arm);
+  private final IntakeCrate intakeCrate = new IntakeCrate(intake, intakePistons);
+  private final EjectCrate ejectCrate = new EjectCrate(intake, intakePistons);
+  private final ArcadeDrive arcadeDrive = new ArcadeDrive(drivetrain, () -> -joystick.getY(), joystick::getX);
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     /* Configure the button bindings */
     configureButtonBindings();
+    drivetrain.setDefaultCommand(arcadeDrive);
   }
 
     /**
@@ -37,6 +48,17 @@ public class RobotContainer {
      * within {@link DeadbandXboxController}.
      */
   private void configureButtonBindings() {
+    // xboxController.dPadUp.whileActiveOnce(flipArm);
+    xboxController.dPadUp.whileActiveOnce(armRear);
+    xboxController.dPadDown.whileActiveOnce(armFront);
+    
+    xboxController.yButton.and(xboxController.leftTrigger.negate()).whileActiveOnce(intakeCrate);
+
+    /**
+    * when y button & left trigger are active, move intake outwards.
+    * when the y button & left trigger are inactive, stop.
+    */
+    xboxController.yButton.and(xboxController.leftTrigger).whileActiveOnce(ejectCrate);
   }
 
   /**
