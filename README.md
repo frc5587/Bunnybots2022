@@ -1,5 +1,7 @@
 # Bunnybots 2022
 
+**Note: The `main` branch reflects code at the time of competition. Since then, the arm and intake subsystems have been removed. Please use the `outreach` branch for the most updated code.**
+
 Code for the 2022 [Bunnybots](https://robot.mbhs.edu/bunnybots) competition, hosted by Team 449.
 
 ## Development
