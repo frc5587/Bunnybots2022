@@ -1,5 +1,7 @@
 # Bunnybots 2022
 
+**Note: This is the `outreach` branch, which is the most up to date version of Takeoff's code. Since competition, the arm and intake mechanisms have been removed.**
+
 Code for the 2022 [Bunnybots](https://robot.mbhs.edu/bunnybots) competition, hosted by Team 449.
 
 ## Development
