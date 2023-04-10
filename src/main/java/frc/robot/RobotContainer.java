@@ -4,10 +4,13 @@
 
 package frc.robot;
 
+import java.util.function.BooleanSupplier;
+import java.util.function.DoubleSupplier;
+
 import org.frc5587.lib.control.*;
 
 import edu.wpi.first.wpilibj2.command.Command;
-
+import edu.wpi.first.wpilibj2.command.button.Trigger;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 
@@ -20,18 +23,21 @@ import frc.robot.subsystems.*;
 public class RobotContainer {
   /* Controllers */
   private final DeadbandCommandJoystick joystick = new DeadbandCommandJoystick(0);
+  private final DeadbandCommandXboxController xboxController = new DeadbandCommandXboxController(1);
 
   /* Subsystems */
   private final Drivetrain drivetrain = new Drivetrain();
   
   /* Commands */
   private final ArcadeDrive arcadeDrive = new ArcadeDrive(drivetrain, () -> -joystick.getY(), joystick::getX);
+  private final ArcadeDrive ddrDrive = new ArcadeDrive(drivetrain, buttonToValue(xboxController.x(), xboxController.b(), Constants.DrivetrainConstants.DDR_FWD), buttonToValue(xboxController.y(), xboxController.a(), Constants.DrivetrainConstants.DDR_TURN));
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     /* Configure the button bindings */
     configureButtonBindings();
-    drivetrain.setDefaultCommand(arcadeDrive);
+    // drivetrain.setDefaultCommand(arcadeDrive); // Uncomment this line, and comment out below to use joysticks
+    drivetrain.setDefaultCommand(ddrDrive); // Uncomment this line, and comment out above to use DDR Pad
   }
 
     /**
@@ -41,6 +47,14 @@ public class RobotContainer {
   private void configureButtonBindings() {
   }
 
+  private static DoubleSupplier buttonToValue(Trigger pos, Trigger neg, double power) {
+    return () -> {
+        if(pos.getAsBoolean() == neg.getAsBoolean()) return 0;
+        else if(pos.getAsBoolean()) return power;
+        else return -power;
+    };
+  }
+  
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
    *

@@ -31,5 +31,9 @@ public final class Constants {
         public static final int LEFT_FOLLOWER = 11;
         public static final int RIGHT_LEADER = 15;
         public static final int RIGHT_FOLLOWER = 16;
+
+        // ! Turn these up to go faster, turn them down to go slower
+        public static final double DDR_FWD = 0.2; // m/s
+        public static final double DDR_TURN = 0.2; // m/s
     }
 }
