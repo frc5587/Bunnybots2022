@@ -22,22 +22,24 @@ import frc.robot.subsystems.*;
  */
 public class RobotContainer {
   /* Controllers */
-  private final DeadbandCommandJoystick joystick = new DeadbandCommandJoystick(0);
+  public final DeadbandCommandJoystick joystick = new DeadbandCommandJoystick(0);
   private final DeadbandCommandXboxController xboxController = new DeadbandCommandXboxController(1);
 
   /* Subsystems */
   private final Drivetrain drivetrain = new Drivetrain();
   
   /* Commands */
-  private final ArcadeDrive arcadeDrive = new ArcadeDrive(drivetrain, () -> -joystick.getY(), joystick::getX);
+  private final ArcadeDrive arcadeDrive = new ArcadeDrive(drivetrain, () -> -joystick.getX(), () -> -joystick.getY());
+  private final ArcadeDrive xboxDrive = new ArcadeDrive(drivetrain, () -> -xboxController.getRightX(), () -> -xboxController.getLeftY());
   private final ArcadeDrive ddrDrive = new ArcadeDrive(drivetrain, buttonToValue(xboxController.x(), xboxController.b(), Constants.DrivetrainConstants.DDR_FWD), buttonToValue(xboxController.y(), xboxController.a(), Constants.DrivetrainConstants.DDR_TURN));
 
   /** The container for the robot. Contains subsystems, OI devices, and commands. */
   public RobotContainer() {
     /* Configure the button bindings */
     configureButtonBindings();
-    // drivetrain.setDefaultCommand(arcadeDrive); // Uncomment this line, and comment out below to use joysticks
-    drivetrain.setDefaultCommand(ddrDrive); // Uncomment this line, and comment out above to use DDR Pad
+    // drivetrain.setDefaultCommand(xboxDrive);
+    drivetrain.setDefaultCommand(arcadeDrive); // Uncomment this line, and comment out below to use joysticks
+    // drivetrain.setDefaultCommand(ddrDrive); // Uncomment this line, and comment out above to use DDR Pad
   }
 
     /**

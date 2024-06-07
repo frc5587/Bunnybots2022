@@ -15,7 +15,7 @@ package frc.robot;
 public final class Constants {
     public static final class DrivetrainConstants {
         public static final double WHEEL_DIAMETER = .505 / Math.PI;
-        public static final int ENCODER_CPR = 42;
+        public static final int ENCODER_CPR = 1;
         public static final double GEARING = (54. / 20.) * (50. / 12.);
         public static final boolean INVERT_GYRO = false;
         public static final double TRACK_WIDTH = 25.496;
