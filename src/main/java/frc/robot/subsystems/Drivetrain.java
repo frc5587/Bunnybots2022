@@ -1,40 +1,33 @@
 package frc.robot.subsystems;
 
 import org.frc5587.lib.subsystems.DifferentialDriveBase;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkBase.IdleMode;
-import com.revrobotics.CANSparkLowLevel.MotorType;
+
+import com.revrobotics.spark.SparkBase.PersistMode;
+import com.revrobotics.spark.SparkBase.ResetMode;
+import com.revrobotics.spark.SparkLowLevel.MotorType;
+import com.revrobotics.spark.SparkMax;
 
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import frc.robot.Constants.DrivetrainConstants;
+import frc.robot.config.REVConfigs;
 
 public class Drivetrain extends DifferentialDriveBase {
-    private static CANSparkMax leftLeader = new CANSparkMax(DrivetrainConstants.LEFT_LEADER, MotorType.kBrushless);
-    private static CANSparkMax rightFollower = new CANSparkMax(DrivetrainConstants.RIGHT_FOLLOWER, MotorType.kBrushless);
-
-    public static MotorControllerGroup leftGroup = new MotorControllerGroup(leftLeader);
-    public static MotorControllerGroup rightGroup = new MotorControllerGroup(rightFollower);
+    private static SparkMax leftLeader = new SparkMax(DrivetrainConstants.LEFT_LEADER, MotorType.kBrushless);
+    private static SparkMax rightFollower = new SparkMax(DrivetrainConstants.RIGHT_FOLLOWER, MotorType.kBrushless);
 
     public static DriveConstants constants = new DriveConstants(DrivetrainConstants.WHEEL_DIAMETER, DrivetrainConstants.HISTORY_LIMIT, DrivetrainConstants.INVERT_GYRO, DrivetrainConstants.ENCODER_CPR, DrivetrainConstants.GEARING, DrivetrainConstants.TRACK_WIDTH);
 
+    private REVConfigs motorConfigs = new REVConfigs();
+
     public Drivetrain() {
-        super(leftGroup, rightGroup, constants);
+        super(leftLeader, rightFollower, constants);
     }
 
     @Override
     public void configureMotors() {
-        leftLeader.restoreFactoryDefaults();
-        rightFollower.restoreFactoryDefaults();
+        leftLeader.configure(motorConfigs.leftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        rightFollower.configure(motorConfigs.rightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
-        leftLeader.setIdleMode(IdleMode.kBrake); 
-        rightFollower.setIdleMode(IdleMode.kBrake);
-
-        leftLeader.setSmartCurrentLimit(DrivetrainConstants.STALL_CURRENT_LIMIT, DrivetrainConstants.FREE_CURRENT_LIMIT);
-        rightFollower.setSmartCurrentLimit(DrivetrainConstants.STALL_CURRENT_LIMIT, DrivetrainConstants.FREE_CURRENT_LIMIT);
-
-        leftLeader.setInverted(true);
-        rightFollower.setInverted(DrivetrainConstants.RIGHT_MOTORS_INVERTED);
     }
 
     @Override

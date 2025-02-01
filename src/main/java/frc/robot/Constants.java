@@ -24,7 +24,7 @@ public final class Constants {
         public static final int FREE_CURRENT_LIMIT = 35;
         public static final int HISTORY_LIMIT = 32;
 
-        public static final boolean LEFT_MOTORS_INVERTED = false;
+        public static final boolean LEFT_MOTORS_INVERTED = true;
         public static final boolean RIGHT_MOTORS_INVERTED = true;
 
         public static final int LEFT_LEADER = 10;
