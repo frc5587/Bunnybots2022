@@ -12,42 +12,44 @@ import frc.robot.Constants.DrivetrainConstants;
 import frc.robot.config.REVConfigs;
 
 public class Drivetrain extends DifferentialDriveBase {
-    private static SparkMax leftLeader = new SparkMax(DrivetrainConstants.LEFT_LEADER, MotorType.kBrushless);
-    private static SparkMax rightFollower = new SparkMax(DrivetrainConstants.RIGHT_FOLLOWER, MotorType.kBrushless);
+    private static SparkMax leftMotor = new SparkMax(DrivetrainConstants.LEFT_MOTOR, MotorType.kBrushless);
+    private static SparkMax rightMotor = new SparkMax(DrivetrainConstants.RIGHT_MOTOR, MotorType.kBrushless);
 
-    public static DriveConstants constants = new DriveConstants(DrivetrainConstants.WHEEL_DIAMETER, DrivetrainConstants.HISTORY_LIMIT, DrivetrainConstants.INVERT_GYRO, DrivetrainConstants.ENCODER_CPR, DrivetrainConstants.GEARING, DrivetrainConstants.TRACK_WIDTH);
+    public static DriveConstants constants = new DriveConstants(DrivetrainConstants.WHEEL_DIAMETER,
+            DrivetrainConstants.HISTORY_LIMIT, DrivetrainConstants.INVERT_GYRO, DrivetrainConstants.ENCODER_CPR,
+            DrivetrainConstants.GEARING, DrivetrainConstants.TRACK_WIDTH);
 
     private REVConfigs motorConfigs = new REVConfigs();
 
     public Drivetrain() {
-        super(leftLeader, rightFollower, constants);
+        super(leftMotor, rightMotor, constants);
     }
 
     @Override
     public void configureMotors() {
-        leftLeader.configure(motorConfigs.leftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
-        rightFollower.configure(motorConfigs.rightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        leftMotor.configure(motorConfigs.leftConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
+        rightMotor.configure(motorConfigs.rightConfig, ResetMode.kResetSafeParameters, PersistMode.kPersistParameters);
 
     }
 
     @Override
     protected double getRightPositionTicks() {
-        return rightFollower.getEncoder().getPosition();
+        return rightMotor.getEncoder().getPosition();
     }
 
     @Override
     protected double getLeftPositionTicks() {
-        return leftLeader.getEncoder().getPosition();
+        return leftMotor.getEncoder().getPosition();
     }
 
     @Override
     protected double getRightVelocityTicksPerSecond() {
-        return rightFollower.getEncoder().getVelocity();
+        return rightMotor.getEncoder().getVelocity();
     }
 
     @Override
     protected double getLeftVelocityTicksPerSecond() {
-        return leftLeader.getEncoder().getVelocity();
+        return leftMotor.getEncoder().getVelocity();
     }
 
     @Override
@@ -57,7 +59,7 @@ public class Drivetrain extends DifferentialDriveBase {
 
     @Override
     protected void resetEncoders() {
-        leftLeader.getEncoder().setPosition(0);
-        rightFollower.getEncoder().setPosition(0);
-    }   
+        leftMotor.getEncoder().setPosition(0);
+        rightMotor.getEncoder().setPosition(0);
+    }
 }

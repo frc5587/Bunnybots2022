@@ -24,13 +24,11 @@ public final class Constants {
         public static final int FREE_CURRENT_LIMIT = 35;
         public static final int HISTORY_LIMIT = 32;
 
-        public static final boolean LEFT_MOTORS_INVERTED = true;
-        public static final boolean RIGHT_MOTORS_INVERTED = true;
+        public static final boolean LEFT_MOTOR_INVERTED = true;
+        public static final boolean RIGHT_MOTOR_INVERTED = true;
 
-        public static final int LEFT_LEADER = 10;
-        public static final int LEFT_FOLLOWER = 11;
-        public static final int RIGHT_LEADER = 15;
-        public static final int RIGHT_FOLLOWER = 16;
+        public static final int LEFT_MOTOR = 10;
+        public static final int RIGHT_MOTOR = 16;
 
         // ! Turn these up to go faster, turn them down to go slower
         public static final double DDR_FWD = 0.2; // m/s
